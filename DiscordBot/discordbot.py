@@ -25,4 +25,4 @@ async def report(ctx,database_name: str , data: str):
     else:
         await ctx.send(f'已生成 {data} 月的月報表，資料庫名稱為 {database_name}')
 bot.run(data['TOKEN'])
-bot.run('MTIxNzI2MDk5OTM2Mzc5MzAzOA.GFICRg.1IeKg7zlt_VQWJAoKewlvrMkdthq9Wws8dbgDQ')
+#bot.run('MTIxNzI2MDk5OTM2Mzc5MzAzOA.GFICRg.1IeKg7zlt_VQWJAoKewlvrMkdthq9Wws8dbgDQ')
