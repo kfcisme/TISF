@@ -2,7 +2,7 @@ import discord
 import json
 from discord.ext import commands
 from cog import command
-with open(file='setup.json', mode='r' , encoding='utf8') as file:
+with open(file='c:\\Users\\arthu\\Downloads\\side project\\DiscordBot\\setup.json' , mode='r' , encoding='utf8') as file:
     data = json.load(file)
 
 intents = discord.Intents.all()
@@ -25,4 +25,3 @@ async def report(ctx,database_name: str , data: str):
     else:
         await ctx.send(f'已生成 {data} 月的月報表，資料庫名稱為 {database_name}')
 bot.run(data['TOKEN'])
-#bot.run('MTIxNzI2MDk5OTM2Mzc5MzAzOA.GFICRg.1IeKg7zlt_VQWJAoKewlvrMkdthq9Wws8dbgDQ')
