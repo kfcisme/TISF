@@ -1,6 +1,6 @@
-DB_HOST = 'your_database_host'
-DB_PORT = 3306
-DB_USER = 'your_username'
-DB_PASSWORD = 'your_password'
-DB_NAME = 'your_database_name'
+DB_HOST = 'DESKTOP-L0616R3'
+DB_PORT = 3360
+DB_USER = 'roots'
+DB_PASSWORD = 'Ff0966592979'
+DB_NAME = 'database'
 DISCORD_TOKEN = 'MTIxNzI2MDk5OTM2Mzc5MzAzOA.GFICRg.1IeKg7zlt_VQWJAoKewlvrMkdthq9Wws8dbgDQ' 
