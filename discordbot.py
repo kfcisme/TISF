@@ -3,8 +3,8 @@ from cog import command
 from discord.ext import commands
 import datetime
 from db_connection import MySQLConnection
-from analysis.data_analysis import DataAnalysis
-from report.generate_report import ReportGenerator
+from analysis import *
+from report.回歸直線 import ReportGenerator
 from config import DISCORD_TOKEN
 from config import DB_NAME
 #class DiscordBot:
@@ -40,9 +40,9 @@ async def report(ctx, database_name: str, data: str):
             discord_file = discord.File(pdf, filename="report.pdf")
             if int(data) > 12 and int(data) <= time.year:
                 await ctx.send(f'已生成 {data} 年的年報表，資料庫名稱為 {database_name}', file=discord_file)
-            elif int(data) >= 1 and int(data) <= time.month:
+            elif int(data) >= 1 and int(data) <= time.week:
                 await ctx.send(f'已生成 {data} 月的月報表，資料庫名稱為 {database_name}', file=discord_file)
-            elif int(data) > time.month and int(data) <= 12:
+            elif int(data) > time.week and int(data) <= 12:
                 await ctx.send(f'已生成{time.year-1}年的{data}月月報表，資料庫名稱為 {database_name}', file=discord_file)
             else:
                 await ctx.send(f'⚠️請輸入正確的西元年份或月份')

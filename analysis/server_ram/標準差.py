@@ -18,15 +18,15 @@ class server_RAM_Std:
         daily_stats.columns = ['timestamp', 'mean', 'std']
         return daily_stats
 
-    def monthly_server_ram_std(self, records):
+    def weekly_server_ram_std(self, records):
         df = pd.DataFrame(records, columns=['timestamp', 'value'])
         df['timestamp'] = pd.to_datetime(df['timestamp'])
-        df['month'] = df['timestamp'].dt.to_period('M')
-        monthly_std = df.groupby('month')['value'].std().reset_index()
-        monthly_std['month'] = monthly_std['month'].dt.to_timestamp()
-        return monthly_std
+        df['week'] = df['timestamp'].dt.to_period('M')
+        weekly_std = df.groupby('week')['value'].std().reset_index()
+        weekly_std['week'] = weekly_std['week'].dt.to_timestamp()
+        return weekly_std
 
-    def insert_monthly_server_ram_std(self, monthly_std):
-        query = f"INSERT INTO {table名稱} (month, std_dev) VALUES (%s, %s)"
-        for index, row in monthly_std.iterrows():
-            self.db_connection.execute_insert(query, (row['month'], row['value']))
+    def insert_weekly_server_ram_std(self, weekly_std):
+        query = f"INSERT INTO {table名稱} (week, std_dev) VALUES (%s, %s)"
+        for index, row in weekly_std.iterrows():
+            self.db_connection.execute_insert(query, (row['week'], row['value']))

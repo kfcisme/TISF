@@ -17,18 +17,18 @@ class DataProcessor:
         daily_average = df.resample('D', on='timestamp').mean().reset_index()
         return daily_average
 
-    def monthly_average(self, daily_average):
-        daily_average['month'] = daily_average['timestamp'].dt.to_period('M')
-        monthly_average = daily_average.groupby('month')['value'].mean().reset_index()
-        monthly_average['month'] = monthly_average['month'].dt.to_timestamp()
-        return monthly_average
+    def weekly_average(self, daily_average):
+        daily_average['week'] = daily_average['timestamp'].dt.to_period('M')
+        weekly_average = daily_average.groupby('week')['value'].mean().reset_index()
+        weekly_average['week'] = weekly_average['week'].dt.to_timestamp()
+        return weekly_average
 
     def insert_daily_average(self, daily_average):
         query = f"INSERT INTO {table名稱} (date, average) VALUES (%s, %s)"
         for index, row in daily_average.iterrows():
             self.db_connection.execute_insert(query, (row['timestamp'], row['value']))
 
-    def insert_monthly_average(self, monthly_average):
-        query = f"INSERT INTO {table名稱} (month, average) VALUES (%s, %s)"
-        for index, row in monthly_average.iterrows():
-            self.db_connection.execute_insert(query, (row['month'], row['value']))
+    def insert_weekly_average(self, weekly_average):
+        query = f"INSERT INTO {table名稱} (week, average) VALUES (%s, %s)"
+        for index, row in weekly_average.iterrows():
+            self.db_connection.execute_insert(query, (row['week'], row['value']))
