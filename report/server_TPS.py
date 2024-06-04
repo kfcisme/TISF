@@ -20,11 +20,11 @@ class server_ram_report:
         pdf = FPDF()
         pdf.add_page()
         pdf.set_font("Arial", size=12)
-        
         pdf.cell(200, 10, txt="Data Analysis Report", ln=True, align='C')
+
         for key, value in self.analysis_results.items():
             pdf.cell(200, 10, txt=f"{key}: {value:.2f}", ln=True)
+
         pdf.cell(200, 10, txt=f"{dist_type.capitalize()} Distribution Parameters: {dist_params}", ln=True)
-        
         pdf.image(plot_image_path, x=10, y=100, w=180)
         pdf.output(pdf_output_path)
