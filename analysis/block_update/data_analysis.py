@@ -5,8 +5,8 @@ import numpy as np
 from db_connection import MySQLConnection
 
 class blockupdatetrend:
-    def __init__(self, db_connection):
-        self.db_connection = db_connection
+    def __init__(self, connection):
+        self.db_connection = connection
 
     def fetch_data(self):
         query = "SELECT timestamp, update_id FROM block_updates"

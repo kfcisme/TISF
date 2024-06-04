@@ -28,13 +28,11 @@ class NewPlayerTrend:
 
     def generate_trend_plot(self, weekly_new_players, plot_image_path):
         plt.figure(figsize=(12, 6))
-
         plt.plot(weekly_new_players['timestamp'], weekly_new_players['new_players'], label='Weekly New Players', color='green')
         plt.title('Weekly New Players Trend')
         plt.xlabel('Week')
         plt.ylabel('New Players')
         plt.legend()
-
         plt.tight_layout()
         plt.savefig(plot_image_path)
         plt.close()
@@ -43,16 +41,12 @@ class NewPlayerTrend:
         pdf = FPDF()
         pdf.add_page()
         pdf.set_font("Arial", size=12)
-        
         pdf.cell(200, 10, txt="New Player Trend Analysis Report", ln=True, align='C')
-
         pdf.image(plot_image_path, x=10, y=20, w=190)
-
         pdf.ln(120)
         pdf.cell(200, 10, txt=f"Kolmogorov-Smirnov Test Results:", ln=True)
         pdf.cell(200, 10, txt=f"D-statistic: {ks_results[0]:.4f}", ln=True)
         pdf.cell(200, 10, txt=f"P-value: {ks_results[1]:.4f}", ln=True)
-
         pdf.output(pdf_output_path)
 
     def insert_weekly_new_players(self, weekly_new_players):

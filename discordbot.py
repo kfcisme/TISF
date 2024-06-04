@@ -3,8 +3,8 @@ from cog import command
 from discord.ext import commands
 import datetime
 from db_connection import MySQLConnection
+from report import *
 from analysis import *
-from report.回歸直線 import ReportGenerator
 from config import DISCORD_TOKEN
 from config import DB_NAME
 #class DiscordBot:
@@ -26,7 +26,7 @@ async def report(ctx, database_name: str, data: str):
         db_conn = MySQLConnection()
         connection = db_conn.connect()
             
-        analysis = DataAnalysis(connection)
+        analysis = analysis(connection)
         query = f"SELECT x, y FROM {database_name}" 
         df = analysis.fetch_data(query)
         analyzed_data, analysis_results = analysis.analyze_data(df)
