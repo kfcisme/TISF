@@ -1,9 +1,10 @@
 import matplotlib.pyplot as plt
 from fpdf import FPDF
+from db_connect import report_MySQLConnection
 
-class player:
-    def __init__(self):
-        pass
+class player(report_MySQLConnection):
+    #def __init__(self):
+     #   pass
 
     def line_plot(self, df, plot_image_path):
         plt.figure(figsize=(10, 6))

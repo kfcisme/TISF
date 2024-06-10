@@ -1,20 +1,17 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from datetime import datetime
 from scipy.stats import kstest, uniform
 import numpy as np
 from db_connect import report_MySQLConnection
 from fpdf import FPDF
 
-
 class NewPlayerTrend(report_MySQLConnection):
-    #def __init__(self, db_connection):
-    #    self.db_connection = db_connection
+    def __init__(self):
+        super().__init__()
 
     def fetch_data(self):
         query = "SELECT timestamp, player_id FROM new_players"
-        records = self.db_connection.execute_query(query)
-        return records
+        return self.execute_query(query)
 
     def weekly_new_players(self, records):
         df = pd.DataFrame(records, columns=['timestamp', 'player_id'])
@@ -29,10 +26,10 @@ class NewPlayerTrend(report_MySQLConnection):
 
     def generate_trend_plot(self, weekly_new_players, plot_image_path):
         plt.figure(figsize=(12, 6))
-        plt.plot(weekly_new_players['timestamp'], weekly_new_players['new_players'], label='Weekly New Players', color='green')
-        plt.title('Weekly New Players Trend')
-        plt.xlabel('Week')
-        plt.ylabel('New Players')
+        plt.plot(weekly_new_players['timestamp'], weekly_new_players['new_players'], label='每週新玩家', color='green')
+        plt.title('每週新玩家趨勢')
+        plt.xlabel('週')
+        plt.ylabel('新玩家')
         plt.legend()
         plt.tight_layout()
         plt.savefig(plot_image_path)
@@ -42,15 +39,15 @@ class NewPlayerTrend(report_MySQLConnection):
         pdf = FPDF()
         pdf.add_page()
         pdf.set_font("Arial", size=12)
-        pdf.cell(200, 10, txt="New Player Trend Analysis Report", ln=True, align='C')
+        pdf.cell(200, 10, txt="新玩家趨勢分析報告", ln=True, align='C')
         pdf.image(plot_image_path, x=10, y=20, w=190)
         pdf.ln(120)
-        pdf.cell(200, 10, txt=f"Kolmogorov-Smirnov Test Results:", ln=True)
-        pdf.cell(200, 10, txt=f"D-statistic: {ks_results[0]:.4f}", ln=True)
-        pdf.cell(200, 10, txt=f"P-value: {ks_results[1]:.4f}", ln=True)
+        pdf.cell(200, 10, txt="Kolmogorov-Smirnov 檢驗結果:", ln=True)
+        pdf.cell(200, 10, txt=f"D-統計值: {ks_results[0]:.4f}", ln=True)
+        pdf.cell(200, 10, txt=f"P-值: {ks_results[1]:.4f}", ln=True)
         pdf.output(pdf_output_path)
 
     def insert_weekly_new_players(self, weekly_new_players):
         query = "INSERT INTO weekly_new_players (week, new_players) VALUES (%s, %s)"
         for index, row in weekly_new_players.iterrows():
-            self.db_connection.execute_insert(query, (row['timestamp'], row['new_players']))
+            self.execute_insert(query, (row['timestamp'], row['new_players']))

@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 from fpdf import FPDF
-
-class server_ram_report:
+from db_connect import report_MySQLConnection
+class server_ram_report(report_MySQLConnection):
     def __init__(self, analyzed_data, analysis_results):
         self.analyzed_data = analyzed_data
         self.analysis_results = analysis_results

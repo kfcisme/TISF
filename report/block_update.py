@@ -3,12 +3,12 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 from scipy.stats import kstest, uniform
 import numpy as np
-from db_connection import MySQLConnection
+from db_connect import report_MySQLConnection
 from fpdf import FPDF
 
-class BlockUpdateTrend:
-    def __init__(self, db_connection):
-        self.db_connection = db_connection
+class BlockUpdateTrend(report_MySQLConnection):
+    #def __init__(self, db_connection):
+    #    self.db_connection = db_connection
 
     def fetch_data(self):
         query = "SELECT timestamp, update_id FROM block_updates"
@@ -36,21 +36,18 @@ class BlockUpdateTrend:
 
     def generate_trend_plot(self, daily_counts, weekly_stats, plot_image_path):
         plt.figure(figsize=(12, 6))
-
         plt.subplot(1, 2, 1)
         plt.plot(daily_counts['timestamp'], daily_counts['total_updates'], label='Daily Updates')
         plt.title('Daily Updates Trend')
         plt.xlabel('Date')
         plt.ylabel('Total Updates')
         plt.legend()
-
         plt.subplot(1, 2, 2)
         plt.plot(weekly_stats['week'], weekly_stats['total_updates'], label='Weekly Updates', color='orange')
         plt.title('Weekly Updates Trend')
         plt.xlabel('Week')
         plt.ylabel('Total Updates')
         plt.legend()
-
         plt.tight_layout()
         plt.savefig(plot_image_path)
         plt.close()
@@ -59,16 +56,12 @@ class BlockUpdateTrend:
         pdf = FPDF()
         pdf.add_page()
         pdf.set_font("Arial", size=12)
-        
         pdf.cell(200, 10, txt="方塊更新變化趨勢", ln=True, align='C')
-
         pdf.image(plot_image_path, x=10, y=20, w=190)
-
         pdf.ln(120)
         pdf.cell(200, 10, txt=f"Kolmogorov-Smirnov Test Results:", ln=True)
         pdf.cell(200, 10, txt=f"D-statistic: {ks_results[0]:.4f}", ln=True)
         pdf.cell(200, 10, txt=f"P-value: {ks_results[1]:.4f}", ln=True)
-
         pdf.output(pdf_output_path)
 
     def insert_daily_statistics(self, daily_counts):
