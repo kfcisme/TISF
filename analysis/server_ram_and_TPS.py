@@ -8,7 +8,7 @@ class ServerAnalysis(analysis_MySQLConnection):
     def __init__(self, db_connection, metric):
         super().__init__()
         self.db_connection = db_connection
-        self.metric = metric  # 'ram' 或 'tps'
+        self.metric = metric  
 
     def fetch_data(self):
         table = 'ram' if self.metric == 'ram' else 'tps'
