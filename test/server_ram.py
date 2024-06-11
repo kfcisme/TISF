@@ -9,7 +9,6 @@ class ServerRAMAnalysis(report_MySQLConnection):
         self.analysis_results = analysis_results
 
     def generate_line_plot(self, plot_image_path):
-        """生成 RAM 使用趨勢的線形圖"""
         plt.figure(figsize=(10, 6))
         plt.plot(self.analyzed_data.index, self.analyzed_data['value'], label='RAM 使用量')
         plt.title('RAM 使用時間序列')
@@ -20,7 +19,6 @@ class ServerRAMAnalysis(report_MySQLConnection):
         plt.close()
 
     def generate_pdf_report(self, dist_params, dist_type, plot_image_path, pdf_output_path):
-        """生成包含分析結果的 PDF 報告"""
         pdf = FPDF()
         pdf.add_page()
         pdf.set_font("Arial", size=12)

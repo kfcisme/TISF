@@ -2,12 +2,12 @@ import discord
 from discord.ext import commands
 from config import DISCORD_TOKEN
 import datetime
-import db_connect  # 確保此導入路徑正確
+import db_connect  
 import server_ram
 import server_TPS
 import player
 import block_update
-import newplayer  # 假設您已有此分析類別
+import newplayer  
 
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="!", intents=intents)
@@ -16,9 +16,6 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 async def on_ready():
     print(f"{bot.user.name} 已連接到 Discord！")
 
-@bot.command()
-async def reload(ctx):
-    await ctx.send('機器人正在重新加載配置和數據...')
 
 @bot.command()
 async def report(ctx, analysis_type: str, period: str):
